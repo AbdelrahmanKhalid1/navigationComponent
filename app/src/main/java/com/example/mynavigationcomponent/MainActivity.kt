@@ -21,17 +21,19 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        navController = findNavController(R.id.fragmentContainerView)
+        //you wasn't initializing it in the proper way
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
+        navController = navHostFragment.navController
         drawerLayout = findViewById(R.id.drawerLayout)
 
 
-        navigationView.setupWithNavController(navController)
         appBarConfiguration =
             AppBarConfiguration(setOf(R.id.firstFragment, R.id.secondFragment), drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
+        navigationView.setupWithNavController(navController)
 
-        navigationView.setNavigationItemSelectedListener(this)
+//        navigationView.setNavigationItemSelectedListener(this)
     }
 
     override fun onSupportNavigateUp(): Boolean {
